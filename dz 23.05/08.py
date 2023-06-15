@@ -1,10 +1,8 @@
-user = input ("введите стоимость покупк в долларах")
-user1 = input("введите размер вашей скидки в процентах")
-sellary = int(user)
-discount = int (user1)
-total = sellary - discount 
-print (total)
-#нет идей как это работает
+purchase_price = float(input("Введите стоимость покупки ($): "))
+discount = float(input("Введите размер скидки (%): "))
 
-# VN: Это неверное решение.
-# Вам нужно почитать информацию о том что такое проценты, и как они считаются
+discount_amount = purchase_price * (discount / 100)
+total_amount = purchase_price - discount_amount
+
+print("Сумма скидки: ${:.2f}".format(discount_amount))
+print("Итоговая сумма к оплате: ${:.2f}".format(total_amount))
