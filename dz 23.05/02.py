@@ -1,5 +1,5 @@
 user = input("введите слово из трех букв:")
-letter = str(user)
+letter = str(user)  # VN: не нужно строку переводить в строку!
 first_char = user [0]
 second_char = user [1]
 third_char = user [2]

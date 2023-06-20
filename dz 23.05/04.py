@@ -1,5 +1,5 @@
 user = input("введите любое слово: ")
-word = str(user)
+word = str(user)  # VN: не нужно строку переводить в строку!
 midpoint = len(word) // 2
 first_half = word[:midpoint]
 second_half = word[midpoint:]
