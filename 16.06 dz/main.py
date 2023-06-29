@@ -1,4 +1,7 @@
 from datetime import datetime
+# VN: не хватает импортов:
+# from hotel import Hotel
+# from person import Person
 
 
 hotel = Hotel("Отель Комфорт", 100000, 10)

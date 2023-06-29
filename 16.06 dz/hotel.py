@@ -46,6 +46,7 @@ class Hotel:
         self.name = name
         self.balance = balance
         self.rooms = [Room(i) for i in range(1, num_rooms + 1)]
+        # VN:        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  отличная идея!
 
     def get_price(self, room_number, date_from, date_to):
         room = self.rooms[room_number - 1]
