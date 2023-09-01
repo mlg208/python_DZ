@@ -14,6 +14,11 @@ class Animal:
 
 
 my_animal = Animal("Леопард", 100, "средний")
+#VN: потому что в качестве size вы ^^^^^^^^^ передаёте строку
+# а потом в методе eat хотите сложить эту строку с числом: self.size += meal_length
+# об этом вам и говорит интерпретатор -> TypeError: can only concatenate str (not "int") to str
+# Используйте ОТЛАДЧИК в таких случаях!
+
 print(f"Имя: {my_animal.name}")
 print(f"Вес: {my_animal.weight}")
 print(f"Размер: {my_animal.size}")

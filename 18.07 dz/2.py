@@ -35,9 +35,17 @@ class Predator(Animal):
             print(f"{self.name} не может съесть {meal}.")
 
 herbivore = Herbivore("Зебра", 150, "средний", ["трава", "листья"])
+#                                   ^^^^^^^^^
 predator = Predator("Лев", 200, "большой")
+#                               ^^^^^^^^^
+#VN: то же самое, что и в 1.py
 herbivore.talk()
 herbivore.eat("трава")
 herbivore.eat("мясо")
 predator.talk()
 predator.eat(herbivore)
+#^^^^^^^ лучше называйте переменные так как и животных: 
+# zebra = Herbivore("Зебра",...
+# lion = Predator("Лев",... и тд
+
+#VN: Также предусмотрите, чтобы одну и ту же зебру нельзя было съесть дважды - ни одним и тем же хищником, ни разными
