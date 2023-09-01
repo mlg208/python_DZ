@@ -12,6 +12,10 @@ def extract_emails(text):
             while end < len(text) and (text[end].isalnum() or text[end] in "-._"):
                 end += 1
 
+            #VN: очень неплохой алгоритм. У него есть небольшой недостаток, например
+            # something@ , @something или просто @  -- будут считаться валидными адресами email.
+            # Также он будет считать адресом something@something, хотя в нём нет точки с именем домена
+
             emails.append(text[start:end])
             i = end
         else:
