@@ -1,12 +1,13 @@
 import sys
-from PyQt5.QtWidgets import QMainWindow, QApplication
-from calc_view import CalculatorView
+from PyQt6.QtWidgets import QApplication
+from router import Router
 
-with open("style.css", "r", encoding="UTF-8") as fd:
-        style = fd.read()
 
-if __name__ == '__main__':
-    app = QApplication([])
-    window = CalculatorView()
-    window.show()
-    app.exec_()
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    
+    route = Router()
+    route.start()
+
+    app.exec()
+    
