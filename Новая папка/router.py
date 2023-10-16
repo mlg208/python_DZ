@@ -1,10 +1,10 @@
 from PyQt6.QtCore import QObject
-from logger import Logger
-from .gui import Gui
+from logger import log
+from gui import Gui
 from data_storage import DataStorage
-from .udp_receiver import Udp_receiver
-from udp_sender import Udp_Server
-from contoller import Controller
+from udp_receiver import UdpReceiver
+from udp_sender import UdpSender
+from controller import Controller
 
 
 class Router(QObject):
@@ -12,27 +12,42 @@ class Router(QObject):
         super().__init__()
         self.data_storage = DataStorage()
         self.gui = Gui()
-        self.udp_receiver = Udp_receiver()
-        self.udp_sender = Udp_Server()
+        self.udp_receiver = UdpReceiver()
+        self.udp_sender = UdpSender()
         self.controller = Controller()
         # Здесь будем роутить сигналы
 
         # Сигналы Gui
         self.gui.loginUser.connect(self.data_storage.auth)
         self.gui.loginUser.connect(self.controller.login)
+        self.gui.sendMessage.connect(self.controller.send_message)
+        self.gui.changeChat.connect(self.controller.change_chat)
 
         # Сигналы контроллера
         self.controller.switchWindow.connect(self.gui.set_window)
+        self.controller.addContact.connect(self.gui.add_contact)
+        self.controller.showMessage.connect(self.gui.show_message)
+        self.controller.sendMessage.connect(self.udp_sender.send)
+        self.controller.setChat.connect(self.gui.set_chat)
+        self.controller.sendHello.connect(self.udp_sender.send)
+
+
 
         # Сигналы Udp ресивера
-        self.udp_receiver.message.connect(self.controller.message_received)
-        self.gui.sendMessage.connect(self.udp_sender.send)
-        
-        self.udp_receiver.message.connect(self.gui.show_message)
-        
+        self.udp_receiver.message.connect(self.controller.recived_message)
+        self.udp_receiver.hello.connect(self.controller.recived_hello)
+        # self.udp_receiver.message.connect(self.gui.send_message)
+        # self.udp_receiver.message.connect(self.gui.show_message)
+
+
+        #сигналы дата сторэйдж
+        self.data_storage.ready.connect(self.controller.database_ready)
+        self.data_storage.authOk.connect(self.controller.database_auth_ok)
+        self.data_storage.authBad.connect(self.controller.database_auth_bad)   
+     
 
     def start(self):
-        Logger.i("Стартуем роутер")
+        log.i("Стартуем роутер")
         self.data_storage.start()
         self.gui.start()
         self.udp_receiver.start()
