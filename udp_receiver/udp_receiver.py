@@ -1,40 +1,38 @@
-from PyQt6.QtCore import QThread
+from PyQt6.QtCore import QThread, pyqtSignal
 import socket
+from logger import log
+from message import Message
 
-class Udp_receiver:
-    def __init__(self, server_address, server_port):
-        self.server_address = server_address
-        self.server_port = server_port
-        self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-    def send(self, message):
-        try:
-            self.client_socket.sendto(message.encode('utf-8'), (self.server_address, self.server_port))
-        except Exception as e:
-            print(f"Error sending message: {str(e)}")
+class UdpReceiver(QThread):
+    message = pyqtSignal(Message)
+    hello = pyqtSignal(str)
 
-    def receive(self):
-        try:
-            data, _ = self.client_socket.recvfrom(1024)
-            response = data.decode('utf-8')
-            return response
-        except Exception as e:
-            print(f"Error receiving response: {str(e)}")
-            return None
-
-if __name__ == "__main__":
-    server_address = 'localhost' 
-    server_port = 1234567
-
-    client = Udp_receiver(server_address, server_port)
-
-    while True:
-        message = input("Enter a message (or 'q' to quit): ")
-        if message == 'q':
-            break
-        client.send(message)
-        response = client.receive()
-        print(f"Server response: {response}")
+    def __init__(self):
+        super().__init__()
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        hostname = socket.gethostname()
+        ip_adr = socket.gethostbyname(hostname)
+        self.addres = (ip_adr, 9900)
+        self.running = False
+        
 
     def run(self):
-        print('Udp_receiver запущен!')
+        log.i("Ресивер запущен")
+        self.socket.bind(self.addres)
+        self.running = True
+        while self.running:
+            data, addr = self.socket.recvfrom(4096)
+            received_string = data.decode(encoding= "utf-8")
+            log.d(f'получено сообщение от {addr}: {received_string}')
+            msg = Message(received_string)
+            msg.senderIP == addr[0]
+            if msg.type == 'service_request' and msg.text.lower() == 'Hello':
+                self.hello.emit(msg)
+            else:
+                self.message.emit(msg)  
+
+
+    def stop(self):
+        self.running = False
+        super().stop()

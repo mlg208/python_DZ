@@ -5,9 +5,8 @@ from router import Router
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    
+
     route = Router()
     route.start()
 
     app.exec()
-    
