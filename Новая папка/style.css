@@ -1,9 +1,9 @@
-QWidget {
+.QWidget {
     font-size: 18px;
     background-color: #F0F0F0;
 }
 
-QLineEdit {
+.QLineEdit {
     font-size: 24px;
     background-color: white;
     border: 2px solid #ccc;
@@ -12,7 +12,7 @@ QLineEdit {
     min-height: 40px;
 }
 
-QPushButton {
+.QPushButton {
     font-size: 18px;
     background-color: #E0E0E0;
     border: 1px solid #ccc;
@@ -21,7 +21,7 @@ QPushButton {
     min-width: 60px;
 }
 
-QPushButton:hover {
+.QPushButton:hover {
     background-color: #D0D0D0;
 }
 
