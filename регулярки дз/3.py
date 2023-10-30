@@ -19,7 +19,10 @@ output_filename = 'output.txt'
 with open(input_filename, 'r', encoding='utf-8') as file:
     text = file.read()
 
-pattern = r'(\d+\.\d+)\s*([$€]|USD|EUR)'
+#pattern = r'(\d+\.\d+)\s*([$€]|USD|EUR)'
+pattern = r'(\d+\.?\d+)\s*([$€]|USD|EUR)'
+#VN: В вашем регулярном выражении точка была обязательной. А в файле input.txt все суммы целые, поэтому 
+# не находилось ни одного совпадения. С помощью знака '?' можно сделать любой символ необязательным.
 
 converted_text = re.sub(pattern, convert_currency, text)
 
