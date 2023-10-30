@@ -16,6 +16,7 @@ class Application():
         image = pygame.image.load(self.icon)
         pygame.display.set_icon(image)
         self.player = AnimatedSprite(1.2, 'resources/sprites/anime_boy', 12, controllable=True)
+        #VN: Фактическое расположение спрайтов -> 'resources/anime_boy'
         self.player.placeTo(self.screen)
 
         ground = Block((800, 50), 'green')
