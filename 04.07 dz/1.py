@@ -1,27 +1,9 @@
+import re
+
 def extract_emails(text):
-    emails = []
-    i = 0
-    while i < len(text):
-        if text[i] == "@":
-            start = i - 1
-            while start >= 0 and (text[start].isalnum() or text[start] in "-._"):
-                start -= 1
-            start += 1
-
-            end = i + 1
-            while end < len(text) and (text[end].isalnum() or text[end] in "-._"):
-                end += 1
-
-            #VN: очень неплохой алгоритм. У него есть небольшой недостаток, например
-            # something@ , @something или просто @  -- будут считаться валидными адресами email.
-            # Также он будет считать адресом something@something, хотя в нём нет точки с именем домена
-
-            emails.append(text[start:end])
-            i = end
-        else:
-            i += 1
+    email_pattern = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
+    emails = re.findall(email_pattern, text)
     return emails
-
 
 with open("input.txt", "r", encoding="utf-8") as f:
     text = f.read()
